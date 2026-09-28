@@ -21,21 +21,35 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy to Staging') {
             steps {
-                echo 'Развертывание приложения...'
-                echo 'Деплой успешно завершен'
+                echo 'Развертывание приложения в staging...'
+                echo 'Staging-развертывание выполнено'
+            }
+        }
+
+        stage('Approval') {
+            steps {
+                input message: 'Выполнить деплой в Production?',
+                      ok: 'Deploy'
+            }
+        }
+
+        stage('Deploy to Production') {
+            steps {
+                echo 'Развертывание приложения в Production...'
+                echo 'Production-развертывание выполнено'
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline успешно выполнен'
+            echo 'CI/CD Pipeline успешно выполнен'
         }
 
         failure {
-            echo 'Pipeline завершился с ошибкой'
+            echo 'CI/CD Pipeline завершился с ошибкой'
         }
 
         always {
