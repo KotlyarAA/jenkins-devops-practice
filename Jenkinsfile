@@ -23,8 +23,15 @@ pipeline {
 
         stage('Deploy to Staging') {
             steps {
-                echo 'Развертывание приложения в staging...'
-                echo 'Staging-развертывание выполнено'
+                echo 'Подготовка скриптов...'
+
+                sh 'chmod u+x deploy smoke-tests'
+
+                echo 'Деплой на staging...'
+                sh './deploy staging'
+
+                echo 'Запуск smoke-тестов...'
+                sh './smoke-tests'
             }
         }
 
@@ -37,8 +44,8 @@ pipeline {
 
         stage('Deploy to Production') {
             steps {
-                echo 'Развертывание приложения в Production...'
-                echo 'Production-развертывание выполнено'
+                echo 'Деплой на production...'
+                sh './deploy prod'
             }
         }
     }
