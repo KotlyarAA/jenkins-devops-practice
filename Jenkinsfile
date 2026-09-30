@@ -62,5 +62,10 @@ pipeline {
         always {
             echo 'Работа Pipeline завершена'
         }
+
+        cleanup {
+            echo 'Очистка рабочей области...'
+            cleanWs()
+        }
     }
 }
